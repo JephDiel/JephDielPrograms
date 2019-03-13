@@ -20,7 +20,7 @@ public class Grid {
 	}
 	
 	public void generate() {
-		this.bombCount = this.width * this.height / 10;
+		this.bombCount = this.width * this.height / 7;
 		for (int x=0; x<this.width; x++) {
 			for (int y=0; y<this.height; y++) {
 				this.squares[x][y] = new Square(false);
@@ -71,16 +71,35 @@ public class Grid {
 		return touching;
 	}
 	
-	public void draw(Graphics g, int screenWidth, int screenHeight, int buffer) {
+	public void draw(Graphics g, float squareSize, int xBuffer, int yBuffer) {
 		
-		float squareWidth = (screenWidth - (buffer * 2)) / width;
-		float squareHeight = (screenHeight - (buffer * 2)) / height;
-		System.out.println(screenWidth);
 		
 		for (int x=0; x<this.width; x++) {
 			for (int y=0; y<this.height; y++) {
-				squares[x][y].draw(g, squareWidth, squareHeight, x, y, buffer);
+				squares[x][y].draw(g, squareSize, x, y, xBuffer, yBuffer);
 			}
 		}
+	}
+	
+	public boolean reveal(int x, int y) {
+		System.out.println("Reveal!");
+		boolean out = false;
+		if (x>=0 && y>=0 && x<this.width && y<this.height) {
+			boolean[] inputs = squares[x][y].reveal();  //isBomb, isRevealed, touchCount==0
+			out = inputs[0];
+			if (!inputs[0] && !inputs[1] && inputs[2]) {
+				System.out.println("spread");
+				this.reveal(x+1, y);
+				this.reveal(x+1, y-1);
+				this.reveal(x, y-1);
+				this.reveal(x-1, y-1);
+				this.reveal(x-1, y);
+				this.reveal(x-1, y+1);
+				this.reveal(x, y+1);
+				this.reveal(x+1, y+1);
+			}
+			
+		}
+		return out;
 	}
 }
