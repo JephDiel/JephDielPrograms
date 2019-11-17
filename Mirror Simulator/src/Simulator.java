@@ -18,7 +18,10 @@ public class Simulator extends JPanel {
 
     private final int STEPS = 500;
     private final int RESOLUTION = 100;
-    private final double PRECISION = 10000;
+    private final double PRECISIONA = 100000000;
+    private final double PRECISIONB = 100000;
+    private final double PRECISIONC = 1000;
+
     private final int RAYS = 1000;
     private final int FOV = 90;
 
@@ -89,7 +92,7 @@ public class Simulator extends JPanel {
         public void paintComponent(Graphics g) {
             for (int i = 0; i < STEPS; i++) {
                 double x = i;// / (double)STEPS;
-                double y =  this.getHeight() - ((a.getValue() / (PRECISION  * PRECISION) * x * x * x) + (b.getValue() / (PRECISION * 50)  * x * x) + (c.getValue() / PRECISION * x));
+                double y =  this.getHeight() + ((a.getValue() / PRECISIONA) * x * x * x) + ((b.getValue() / PRECISIONB)  * x * x) + ((c.getValue() / PRECISIONC) * x);
                 points[i][0] = x;
                 points[i][1] = y;
                 g.setColor(Color.BLACK);
@@ -136,7 +139,8 @@ public class Simulator extends JPanel {
                     //m3 *= -1;
                     //System.out.println(m2);
                     //g.drawLine((int)points[i][0] + xOffset.getValue(), (int)points[i][1] + yOffset.getValue(), (int)points[i][0] - 500 + xOffset.getValue(), (int)(points[i][1] + (500 * m3)) + yOffset.getValue());
-                    drawLine(points[i][0], points[i][1], points[i][0] + (500 * Math.cos(reflection)), points[i][1] + (500 * Math.sin(reflection)), g);
+                    g.setColor(Color.YELLOW.darker());
+                    drawLine(points[i][0], points[i][1], points[i][0] + (1000 * Math.cos(reflection)), points[i][1] + (1000 * Math.sin(reflection)), g);
                 }
             }
         }
@@ -155,7 +159,7 @@ public class Simulator extends JPanel {
 
         @Override
         public void stateChanged(ChangeEvent e) {
-            equation.setText("y = " + a.getValue() + "x^3 + " + b.getValue() + "x^2 + " + c.getValue() + "x");
+            equation.setText("y = " + (a.getValue() / PRECISIONA) + "x^3 + " + (b.getValue() / PRECISIONB) + "x^2 + " + (c.getValue() / PRECISIONC) + "x");
             Simulator.this.repaint();
         }
     }

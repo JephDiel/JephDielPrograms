@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Mirror Simulator:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Mirror_Simulator_jar</output-path>
+    <root id="archive" name="Mirror Simulator.jar">
+      <element id="module-output" name="Mirror Simulator" />
+    </root>
+  </artifact>
+</component>
