@@ -20,8 +20,8 @@ public class Panel extends JPanel {
         super.paintComponent(g);
         if (universe != null) {
             for (Planet planet: universe.getPlanets()){
-                g.setColor(Color.YELLOW);\
-                g.
+                g.setColor(Color.YELLOW);
+                //g.
 
             }
         }
